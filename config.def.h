@@ -1,7 +1,7 @@
 /* See LICENSE file for copyright and license details. */
 
 /* appearance */
-static const unsigned int borderpx  = 1;        /* border pixel of windows */
+static const unsigned int borderpx  = 7;        /* border pixel of windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const unsigned int systraypinning = 0;   /* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
 static const unsigned int systrayonleft = 0;    /* 0: systray in the right corner, >0: systray on left of status text */
@@ -10,17 +10,17 @@ static const int systraypinningfailfirst = 1;   /* 1: if pinning fails, display 
 static const int showsystray        = 1;        /* 0 means no systray */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const char *fonts[]          = { "monospace:size=10" };
-static const char dmenufont[]       = "monospace:size=10";
+static const char *fonts[]          = { "FiraCode Nerd Font Mono:size=14" };
+static const char dmenufont[]       = "FiraCode Nerd Font Mono:size=14";
 static const char col_gray1[]       = "#222222";
 static const char col_gray2[]       = "#444444";
 static const char col_gray3[]       = "#bbbbbb";
 static const char col_gray4[]       = "#eeeeee";
-static const char col_cyan[]        = "#005577";
+static const char col_cyan[]        = "#31353D";
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
-	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
-	[SchemeSel]  = { col_gray4, col_cyan,  col_cyan  },
+    	[SchemeNorm] = { col_gray3, col_gray1, col_gray1 },
+    	[SchemeSel]  = { col_gray4, col_cyan,  col_gray3 },
 };
 
 /* tagging */
@@ -36,9 +36,64 @@ static const Rule rules[] = {
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-	/* class      instance    title       tags mask     isfloating   monitor */
-	{ "Gimp",     NULL,       NULL,       0,            1,           -1 },
-	{ "Firefox",  NULL,       NULL,       1 << 8,       0,           -1 },
+
+/*    class      				instance, title, tags, mask, isfloating, monitor */
+
+// tag 0 ~ current workspace.
+
+    { "Galculator", 	    			NULL, NULL, 0, 1,  -1 },
+    { "Gnome-screenshot",   			NULL, NULL, 0, 1,  -1 },
+    { "Peek",               			NULL, NULL, 0, 1,  -1 },
+    { "Nl.hjdskes.gcolor3", 			NULL, NULL, 0, 1,  -1 },
+
+// tag 1 ~ web browsing.
+
+    { "firefox",            			NULL,  NULL,  1, 0, -1 },      
+    { "firefox-developer-edition",      	NULL,  NULL,  1, 0, -1 },
+    { "Tor Browser",            		NULL,  NULL,  1, 0, -1 },      
+    { "Chromium",            			NULL,  NULL,  1, 0, -1 },      
+
+// tag 2 ~ terminals.
+
+    { "ghostty",        			NULL, NULL, 1 << 1, 0, -1 },
+    { "Xfce4-terminal", 			NULL, NULL, 1 << 1, 0, -1 },
+
+// tag 3 ~ text editors.
+
+    { "dev.zed.Zed", 				NULL, NULL, 1 << 2, 0, -1 },
+    { "Mousepad",    				NULL, NULL, 1 << 2, 0, -1 },
+
+// tag 4 ~ file viewers.
+
+    { "Evince",  				NULL, NULL, 1 << 3, 0, -1 },
+    { "Ristretto",             			NULL, NULL, 1 << 3, 0, -1 },
+    { "io.github.celluloid_player.Celluloid",   NULL, NULL, 1 << 3, 0, -1 },
+    { "amberol",             			NULL, NULL, 1 << 3, 0, -1 },
+
+// tag 5 ~ utils.
+
+    { "pavucontrol", 	 			NULL, NULL, 1 << 4, 0, -1 },
+    { "Blueman-manager", 			NULL, NULL, 1 << 4, 0, -1 },
+    { "Catfish", 				NULL, NULL, 1 << 4, 0, -1 },
+    { "Gnome-disks", 				NULL, NULL, 1 << 4, 0, -1 },
+    { "Bitwarden", 				NULL, NULL, 1 << 4, 0, -1 },
+    { "Uget-gtk", 				NULL, NULL, 1 << 4, 0, -1 },
+    { "org.nicotine_plus.Nicotine", 		NULL, NULL, 1 << 4, 0, -1 },
+
+// tag 6 ~ file manager.
+
+    { "Thunar", 				NULL, NULL, 1 << 5, 0, -1 },
+
+// tag 7 ~ creative suite.
+
+    { "obsidian", 				"obsidian", "Dots", 1 << 6, 0, -1 },
+    { "kolourpaint", 				NULL, NULL, 1 << 6, 0, -1 },
+    { "kdenlive", 				NULL, NULL, 1 << 6, 0, -1 },
+
+// tag 8 ~ obs.
+
+    { "obs", 					"obs", "OBS", 1 << 7, 0, -1 },
+
 };
 
 /* layout(s) */
@@ -51,8 +106,6 @@ static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen win
 #include "tcl.c"
 static const Layout layouts[] = {
 	/* symbol     arrange function */
-	{ "[]=",      tile },    /* first entry is default */
-	{ "[M]",      monocle },
 	{ "###",      horizgrid },
 	{ "|||",      tcl },
 };
@@ -72,37 +125,56 @@ static const Layout layouts[] = {
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
 
-static const char *termcmd[]  = { "ghostty", NULL };
 static const char *appfinder[]  = {"xfce4-appfinder", NULL};
+static const char *termcmd[]  = { "ghostty", NULL };
+static const char *filemanager[]  = {"thunar", NULL};
+static const char *editor[]  = {"zeditor", NULL};
+static const char *printscr[] = {"gnome-screenshot", "-i", NULL};
+static const char *colorpicker[]  = {"gcolor3", NULL};
+static const char *volume[]   = {"pavucontrol", NULL};
+static const char *bluetooth[]   = {"blueman-manager", NULL};
+static const char *slock[]  = {"slock", NULL};
 
 static const Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_d,      spawn,          {.v = appfinder } },
 	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
-	{ MODKEY,                       XK_b,      togglebar,      {0} },
+	{ MODKEY|ShiftMask,             XK_k,      spawn,          {.v = filemanager } },
+	{ MODKEY|ShiftMask,             XK_e,      spawn,          {.v = editor } },
+	{ MODKEY|ShiftMask,             XK_p,      spawn,          {.v = printscr } },
+	{ MODKEY|ShiftMask,             XK_c,      spawn,          {.v = colorpicker } },
+	{ MODKEY|ShiftMask,             XK_v,      spawn,          {.v = volume } },
+	{ MODKEY|ShiftMask,             XK_b,      spawn,          {.v = bluetooth } },
+	{ MODKEY|ShiftMask,             XK_q,      killclient,     {0} },
+
+	{ MODKEY,                       XK_Tab,    view,           {0} },
+	{ MODKEY,                       XK_Return, zoom,           {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
-	{ MODKEY|ShiftMask,             XK_i,      incnmaster,     {.i = +1 } },
-	{ MODKEY|ShiftMask,             XK_d,      incnmaster,     {.i = -1 } },
+	{ MODKEY|ShiftMask,             XK_s,      tag,            {.ui = ~0 } },
 	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
 	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
-	{ MODKEY,                       XK_Return, zoom,           {0} },
-	{ MODKEY,                       XK_Tab,    view,           {0} },
-	{ MODKEY|ShiftMask,             XK_q,      killclient,     {0} },
-	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
-	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
-	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
 	{ MODKEY,                       XK_space,  setlayout,      {0} },
 	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
 	{ MODKEY|ShiftMask,             XK_f,      togglefullscr,  {0} },
-	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
-	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
-	{ MODKEY,                       XK_comma,  focusmon,       {.i = -1 } },
-	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
-	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
-	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
-	{ MODKEY|ShiftMask,             XK_h,      layoutscroll,   {.i = -1 } },
-	{ MODKEY|ShiftMask,             XK_l,      layoutscroll,   {.i = +1 } },
+
+	{ MODKEY|ShiftMask,             XK_l,      spawn,          {.v = slock } },
+	{ MODKEY|ShiftMask,             XK_x,      quit,           {0} },
+
+//	{ MODKEY,                       XK_b,      togglebar,      {0} },
+//	{ MODKEY|ShiftMask,             XK_i,      incnmaster,     {.i = +1 } },
+//	{ MODKEY|ShiftMask,             XK_d,      incnmaster,     {.i = -1 } },
+//	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
+//	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
+//	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
+//	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
+//	{ MODKEY,                       XK_comma,  focusmon,       {.i = -1 } },
+//	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
+//	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
+//	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
+//	{ MODKEY|ShiftMask,             XK_h,      layoutscroll,   {.i = -1 } },
+//	{ MODKEY|ShiftMask,             XK_l,      layoutscroll,   {.i = +1 } },
+
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
@@ -112,7 +184,6 @@ static const Key keys[] = {
 	TAGKEYS(                        XK_7,                      6)
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
-	{ MODKEY|ShiftMask,             XK_x,      quit,           {0} },
 };
 
 /* button definitions */
