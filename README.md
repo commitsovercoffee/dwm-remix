@@ -9,7 +9,6 @@ This is a custom build of [dwm](https://dwm.suckless.org/) with selected patches
 ### Behaviour
 
 - [pertag](https://dwm.suckless.org/patches/pertag/) : Maintains separate layout and settings per tag.
-- [alwayscenter](https://dwm.suckless.org/patches/alwayscenter/) : New floating windows are automatically centered.
 - [warp](https://dwm.suckless.org/patches/warp/) : Moves the mouse pointer to the focused window.
 - [layoutscroll](https://dwm.suckless.org/patches/layoutscroll/) : Enables cycling through available layouts via keybinding.
 
