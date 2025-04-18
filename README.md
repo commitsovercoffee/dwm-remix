@@ -14,7 +14,6 @@ This is a custom build of [dwm](https://dwm.suckless.org/) with selected patches
 
 - [horizgrid](https://dwm.suckless.org/patches/horizgrid/) : Horizontal grid layout for uniform tiling.
 - [three-column](https://dwm.suckless.org/patches/three-column/) : Three-column layout for focused multitasking.
-- [scratchpad](https://dwm.suckless.org/patches/scratchpad/) : Toggleable floating terminal accessible via keybinding.
 
 - [systray](https://dwm.suckless.org/patches/systray/) : Adds a functional system tray to the bar.
 - [actualfullscreen](https://dwm.suckless.org/patches/actualfullscreen/) : Ensures true fullscreen behavior for windows.
