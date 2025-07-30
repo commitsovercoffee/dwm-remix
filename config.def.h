@@ -44,7 +44,7 @@ static const Rule rules[] = {
     { "Galculator", 	    			NULL, NULL, 0, 1,  -1 },
     { "Gnome-screenshot",   			NULL, NULL, 0, 1,  -1 },
     { "Peek",               			NULL, NULL, 0, 1,  -1 },
-    { "Nl.hjdskes.gcolor3", 			NULL, NULL, 0, 1,  -1 },
+    { "Gcolor3",          			NULL, NULL, 0, 1,  -1 },
 
 // tag 1 ~ web browsing.
 
@@ -66,6 +66,7 @@ static const Rule rules[] = {
 // tag 4 ~ file viewers.
 
     { "Evince",  				NULL, NULL, 1 << 3, 0, -1 },
+    { "com.github.johnfactotum.Foliate",	NULL, NULL, 1 << 3, 0, -1 },
     { "Ristretto",             			NULL, NULL, 1 << 3, 0, -1 },
     { "io.github.celluloid_player.Celluloid",   NULL, NULL, 1 << 3, 0, -1 },
     { "amberol",             			NULL, NULL, 1 << 3, 0, -1 },
@@ -77,12 +78,12 @@ static const Rule rules[] = {
     { "Catfish", 				NULL, NULL, 1 << 4, 0, -1 },
     { "Gnome-disks", 				NULL, NULL, 1 << 4, 0, -1 },
     { "Bitwarden", 				NULL, NULL, 1 << 4, 0, -1 },
-    { "Uget-gtk", 				NULL, NULL, 1 << 4, 0, -1 },
+    { "qBittorrent", 				NULL, NULL, 1 << 4, 0, -1 },
     { "org.nicotine_plus.Nicotine", 		NULL, NULL, 1 << 4, 0, -1 },
 
 // tag 6 ~ file manager.
 
-    { "Thunar", 				NULL, NULL, 1 << 5, 0, -1 },
+    { "Pcmanfm", 				NULL, NULL, 1 << 5, 0, -1 },
 
 // tag 7 ~ creative suite.
 
@@ -93,6 +94,8 @@ static const Rule rules[] = {
 // tag 8 ~ obs.
 
     { "obs", 					"obs", "OBS", 1 << 7, 0, -1 },
+    { "steam", 					NULL, NULL, 1 << 7, 0, -1 },
+    { "steamwebhelper",	          		NULL, NULL, 1 << 7, 0, -1 },
 
 };
 
@@ -127,7 +130,7 @@ static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont,
 
 static const char *appfinder[]  = {"xfce4-appfinder", NULL};
 static const char *termcmd[]  = { "ghostty", NULL };
-static const char *filemanager[]  = {"thunar", NULL};
+static const char *filemanager[]  = {"pcmanfm", NULL};
 static const char *editor[]  = {"zeditor", NULL};
 static const char *printscr[] = {"gnome-screenshot", "-i", NULL};
 static const char *colorpicker[]  = {"gcolor3", NULL};
